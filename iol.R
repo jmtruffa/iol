@@ -1,7 +1,7 @@
 library(httr)
 library(jsonlite)
 
-pass = read.csv('pass.txt', header = FALSE, col.names = c('user', 'pass'), stringsAsFactors = FALSE)
+
 
 
 urlBase = 'https://api.invertironline.com'
@@ -9,8 +9,8 @@ url=paste('https://api.invertironline.com/token')#, '?username=jmtruffa@gmail.co
 urlGetPrices = 'https://api.invertironline.com/api/v2/{Mercado}/Titulos/{Simbolo}/Cotizacion'
 urlSerieHistorica = '/api/v2/{mercado}/Titulos/{simbolo}/Cotizacion/seriehistorica/{fechaDesde}/{fechaHasta}/{ajustada}'
 res = POST(url,
-           body=list(username=pass$user,
-                     password=pass$pass,
+           body=list(username=Sys.getenv("userid.iol"),
+                     password=Sys.getenv("pwd.iol"),
                      grant_type='password'), encode = 'form', verbose())
 data = fromJSON(rawToChar(res$content))
 
